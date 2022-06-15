@@ -1,8 +1,8 @@
 package com.iot.strategy.csr;
 
-import com.iot.strategy.strategies.SendText;
-import com.iot.strategy.strategies.SendTextToConsole;
-import com.iot.strategy.strategies.SendTextToKafka;
+import com.iot.strategy.strategies.Writer;
+import com.iot.strategy.strategies.ConsoleWriter;
+import com.iot.strategy.strategies.KafkaWriter;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,14 +30,14 @@ public class ContextController {
     @PostMapping("/")
     public ResponseEntity<String> sendData() throws IOException {
         String text = service.getTextFromFile();
-        SendText sendTextObj;
+        Writer writerObj;
 
         if (strategy.equals("console")) {
-            sendTextObj = new SendTextToConsole();
-            sendTextObj.sendText(text);
+            writerObj = new ConsoleWriter();
+            writerObj.sendText(text);
         } else if (strategy.equals("kafka")) {
-            sendTextObj = beanFactory.getBean(SendTextToKafka.class);
-            sendTextObj.sendText(text);
+            writerObj = beanFactory.getBean(KafkaWriter.class);
+            writerObj.sendText(text);
         }
 
         return ResponseEntity.status(HttpStatus.OK).body("data using " + strategy + " strategy was successfully sent");

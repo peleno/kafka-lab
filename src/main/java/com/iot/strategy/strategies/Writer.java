@@ -1,5 +1,5 @@
 package com.iot.strategy.strategies;
 
-public interface SendText {
+public interface Writer {
     void sendText(String text);
 }

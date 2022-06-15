@@ -6,7 +6,7 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SendTextToKafka implements SendText {
+public class KafkaWriter implements Writer {
 
     @Value("${kafka.topic_name}")
     private String kafkaTopicName;
@@ -14,7 +14,7 @@ public class SendTextToKafka implements SendText {
     private final KafkaTemplate<String, String> kafkaTemplate;
 
     @Autowired
-    public SendTextToKafka(KafkaTemplate<String, String> kafkaTemplate) {
+    public KafkaWriter(KafkaTemplate<String, String> kafkaTemplate) {
         this.kafkaTemplate = kafkaTemplate;
     }
 
